@@ -1,0 +1,89 @@
+[
+  {
+    "name": "American Battle Monuments Commission",
+    "url": "https://bugcrowd.com/abmc-vdp",
+    "allows_disclosure": true,
+    "managed_by_bugcrowd": true,
+    "safe_harbor": "none",
+    "max_payout": 0,
+    "targets": {
+      "in_scope": [
+        {
+          "type": "website",
+          "target": "https://abmc.gov"
+        }
+      ],
+      "out_of_scope": []
+    }
+  },
+  {
+    "name": "Acorns Grow, Inc.",
+    "url": "https://bugcrowd.com/acorns",
+    "allows_disclosure": true,
+    "managed_by_bugcrowd": true,
+    "safe_harbor": "full",
+    "max_payout": 3500,
+    "targets": {
+      "in_scope": [
+        {
+          "type": "other",
+          "target": "*.acorns.com"
+        },
+        {
+          "type": "other",
+          "target": "Acorns for Android"
+        },
+        {
+          "type": "other",
+          "target": "Acorns for iOS"
+        },
+        {
+          "type": "other",
+          "target": "http://*.acorns.com"
+        },
+        {
+          "type": "other",
+          "target": "https://app.acorns.com"
+        },
+        {
+          "type": "other",
+          "target": "https://apps.apple.com/us/app/acorns-invest-spare-change/id883324671"
+        },
+        {
+          "type": "other",
+          "target": "https://client.acorns.com"
+        },
+        {
+          "type": "api",
+          "target": "https://graphql.acorns.com"
+        },
+        {
+          "type": "website",
+          "target": "https://help.acorns.com"
+        },
+        {
+          "type": "other",
+          "target": "https://play.google.com/store/apps/details?id=com.acorns.android&hl=en_US&gl=US"
+        },
+        {
+          "type": "website",
+          "target": "https://signup.acorns.com/"
+        }
+      ],
+      "out_of_scope": [
+        {
+          "type": "website",
+          "target": "grow.acorns.com"
+        },
+        {
+          "type": "website",
+          "target": "share.acorns.com"
+        },
+        {
+          "type": "website",
+          "target": "store.acorns.com"
+        }
+      ]
+    }
+  }
+]
