@@ -22,6 +22,11 @@ type FederacyData struct {
 	} `json:"targets"`
 }
 
+type FederacyDomainData struct {
+	URL             string
+	AssetIdentifier string
+}
+
 func GetFederacyData() ([]FederacyData, error) {
 	file, err := os.Open("data/federacy_data.json")
 	if err != nil {
@@ -37,17 +42,17 @@ func GetFederacyData() ([]FederacyData, error) {
 	return federacy, nil
 }
 
-func ListFederacyDomain() ([]DomainData, error) {
+func ListFederacyDomain() ([]FederacyDomainData, error) {
 	federacyData, err := GetFederacyData()
 	if err != nil {
 		return nil, err
 	}
 
-	var domainFederacy []DomainData
+	var domainFederacy []FederacyDomainData
 	for _, data := range federacyData {
 		for _, target := range data.Targets.InScope {
 			if target.AssetType == "website" || target.AssetType == "api" {
-				domainFederacy = append(domainFederacy, DomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
+				domainFederacy = append(domainFederacy, FederacyDomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
 			}
 		}
 	}

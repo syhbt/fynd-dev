@@ -22,6 +22,11 @@ type HackenProofData struct {
 	} `json:"targets"`
 }
 
+type HackenProofDomainData struct {
+	URL             string
+	AssetIdentifier string
+}
+
 func GetHackenProofData() ([]HackenProofData, error) {
 	file, err := os.Open("data/hackenproof_data.json")
 	if err != nil {
@@ -37,17 +42,17 @@ func GetHackenProofData() ([]HackenProofData, error) {
 	return hackenproof, nil
 }
 
-func ListHackenProofDomain() ([]DomainData, error) {
+func ListHackenProofDomain() ([]HackenProofDomainData, error) {
 	hackenproofData, err := GetHackenProofData()
 	if err != nil {
 		return nil, err
 	}
 
-	var domainHackenProof []DomainData
+	var domainHackenProof []HackenProofDomainData
 	for _, data := range hackenproofData {
 		for _, target := range data.Targets.InScope {
-			if target.AssetType == "website" || target.AssetType == "api" {
-				domainHackenProof = append(domainHackenProof, DomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
+			if target.AssetType == "web" || target.AssetType == "web3" || target.AssetType == "API" || target.AssetType == "Other" {
+				domainHackenProof = append(domainHackenProof, HackenProofDomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
 			}
 		}
 	}

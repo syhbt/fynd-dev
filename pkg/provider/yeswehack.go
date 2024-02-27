@@ -22,6 +22,11 @@ type YesWeHackData struct {
 	} `json:"targets"`
 }
 
+type YesWeHackDomainData struct {
+	URL             string
+	AssetIdentifier string
+}
+
 func GetYesWeHackData() ([]YesWeHackData, error) {
 	file, err := os.Open("data/yeswehack_data.json")
 	if err != nil {
@@ -37,17 +42,17 @@ func GetYesWeHackData() ([]YesWeHackData, error) {
 	return yeswehack, nil
 }
 
-func ListYesWeHackDomain() ([]DomainData, error) {
+func ListYesWeHackDomain() ([]YesWeHackDomainData, error) {
 	yeswehackData, err := GetYesWeHackData()
 	if err != nil {
 		return nil, err
 	}
 
-	var domainYesWeHack []DomainData
+	var domainYesWeHack []YesWeHackDomainData
 	for _, data := range yeswehackData {
 		for _, target := range data.Targets.InScope {
-			if target.AssetType == "website" || target.AssetType == "api" {
-				domainYesWeHack = append(domainYesWeHack, DomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
+			if target.AssetType == "api" || target.AssetType == "other" || target.AssetType == "web-application" {
+				domainYesWeHack = append(domainYesWeHack, YesWeHackDomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
 			}
 		}
 	}

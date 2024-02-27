@@ -22,6 +22,11 @@ type HackerOneData struct {
 	} `json:"targets"`
 }
 
+type HackerOneDomainData struct {
+	URL             string
+	AssetIdentifier string
+}
+
 func GetHackerOneData() ([]HackerOneData, error) {
 	file, err := os.Open("data/hackerone_data.json")
 	if err != nil {
@@ -37,17 +42,17 @@ func GetHackerOneData() ([]HackerOneData, error) {
 	return hackerone, nil
 }
 
-func ListHackerOneDomain() ([]DomainData, error) {
+func ListHackerOneDomain() ([]HackerOneDomainData, error) {
 	hackeroneData, err := GetHackerOneData()
 	if err != nil {
 		return nil, err
 	}
 
-	var domainHackerOne []DomainData
+	var domainHackerOne []HackerOneDomainData
 	for _, data := range hackeroneData {
 		for _, target := range data.Targets.InScope {
-			if target.AssetType == "website" || target.AssetType == "api" {
-				domainHackerOne = append(domainHackerOne, DomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
+			if target.AssetType == "URL" || target.AssetType == "WILDCARD" {
+				domainHackerOne = append(domainHackerOne, HackerOneDomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
 			}
 		}
 	}

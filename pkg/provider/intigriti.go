@@ -22,6 +22,11 @@ type IntigritiData struct {
 	} `json:"targets"`
 }
 
+type IntigritiDomainData struct {
+	URL             string
+	AssetIdentifier string
+}
+
 func GetIntigritiData() ([]IntigritiData, error) {
 	file, err := os.Open("data/intigriti_data.json")
 	if err != nil {
@@ -37,17 +42,17 @@ func GetIntigritiData() ([]IntigritiData, error) {
 	return intigriti, nil
 }
 
-func ListIntigritiDomain() ([]DomainData, error) {
+func ListIntigritiDomain() ([]IntigritiDomainData, error) {
 	intigritiData, err := GetIntigritiData()
 	if err != nil {
 		return nil, err
 	}
 
-	var domainIntigriti []DomainData
+	var domainIntigriti []IntigritiDomainData
 	for _, data := range intigritiData {
 		for _, target := range data.Targets.InScope {
-			if target.AssetType == "website" || target.AssetType == "api" {
-				domainIntigriti = append(domainIntigriti, DomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
+			if target.AssetType == "url" || target.AssetType == "other" {
+				domainIntigriti = append(domainIntigriti, IntigritiDomainData{URL: data.URL, AssetIdentifier: target.AssetIdentifier})
 			}
 		}
 	}

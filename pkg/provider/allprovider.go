@@ -1,43 +1,51 @@
 package provider
 
-func ListAllDomain() ([]DomainData, error) {
-	var listDomain []DomainData
+import (
+	"fmt"
+)
 
-	domainBugcrowd, err := ListBugcrowdDomain()
-	if err != nil {
-		return nil, err
-	}
-	listDomain = append(listDomain, domainBugcrowd...)
+type AllDomainData struct {
+	DomainData            []DomainData
+	FederacyDomainData    []FederacyDomainData
+	HackenProofDomainData []HackenProofDomainData
+	HackerOneDomainData   []HackerOneDomainData
+	IntigritiDomainData   []IntigritiDomainData
+	YesWeHackDomainData   []YesWeHackDomainData
+}
 
-	domainFederacy, err := ListFederacyDomain()
-	if err != nil {
-		return nil, err
-	}
-	listDomain = append(listDomain, domainFederacy...)
+func ListAllDomain() (AllDomainData, error) {
+	var listDomain AllDomainData
+	var err error
 
-	domainHackenProof, err := ListHackenProofDomain()
+	listDomain.DomainData, err = ListBugcrowdDomain()
 	if err != nil {
-		return nil, err
+		return AllDomainData{}, fmt.Errorf("error getting Bugcrowd domains: %v", err)
 	}
-	listDomain = append(listDomain, domainHackenProof...)
 
-	domainHackerOne, err := ListHackerOneDomain()
+	listDomain.FederacyDomainData, err = ListFederacyDomain()
 	if err != nil {
-		return nil, err
+		return AllDomainData{}, fmt.Errorf("error getting Federacy domains: %v", err)
 	}
-	listDomain = append(listDomain, domainHackerOne...)
 
-	domainIntigriti, err := ListIntigritiDomain()
+	listDomain.HackenProofDomainData, err = ListHackenProofDomain()
 	if err != nil {
-		return nil, err
+		return AllDomainData{}, fmt.Errorf("error getting HackenProof domains: %v", err)
 	}
-	listDomain = append(listDomain, domainIntigriti...)
 
-	domainYesWeHack, err := ListYesWeHackDomain()
+	listDomain.HackerOneDomainData, err = ListHackerOneDomain()
 	if err != nil {
-		return nil, err
+		return AllDomainData{}, fmt.Errorf("error getting HackerOne domains: %v", err)
 	}
-	listDomain = append(listDomain, domainYesWeHack...)
+
+	listDomain.IntigritiDomainData, err = ListIntigritiDomain()
+	if err != nil {
+		return AllDomainData{}, fmt.Errorf("error getting Intigriti domains: %v", err)
+	}
+
+	listDomain.YesWeHackDomainData, err = ListYesWeHackDomain()
+	if err != nil {
+		return AllDomainData{}, fmt.Errorf("error getting YesWeHack domains: %v", err)
+	}
 
 	return listDomain, nil
 }
