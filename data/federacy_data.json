@@ -1,0 +1,93 @@
+[
+  {
+    "id": "a25fbd69-4564-46c3-a8fa-e902a586ca89",
+    "name": "Belvo Technologies Inc.",
+    "offers_awards": true,
+    "url": "https://www.federacy.com/belvo-technologies-inc",
+    "targets": {
+      "in_scope": [
+        {
+          "type": "website",
+          "target": "dashboard.belvo.com"
+        },
+        {
+          "type": "api",
+          "target": "api.belvo.com"
+        },
+        {
+          "type": "website",
+          "target": "belvo.com"
+        },
+        {
+          "type": "api",
+          "target": "sandbox.belvo.com"
+        },
+        {
+          "type": "api",
+          "target": "development.belvo.com"
+        },
+        {
+          "type": "api",
+          "target": "identity.belvo.com"
+        }
+      ],
+      "out_of_scope": [
+        {
+          "type": "website",
+          "target": "https://developers.belvo.com "
+        },
+        {
+          "type": "website",
+          "target": "https://status.belvo.com "
+        },
+        {
+          "type": "website",
+          "target": "https://support.belvo.com"
+        },
+        {
+          "type": "website",
+          "target": "https://institutions.belvo.com"
+        }
+      ]
+    }
+  },
+  {
+    "id": "82e560c7-2164-4ffe-8c7d-30c6edc8cb10",
+    "name": "Bitski",
+    "offers_awards": true,
+    "url": "https://www.federacy.com/bitski",
+    "targets": {
+      "in_scope": [
+        {
+          "type": "api",
+          "target": "api.bitski.com"
+        },
+        {
+          "type": "website",
+          "target": "www.bitski.com"
+        },
+        {
+          "type": "website",
+          "target": "wallet.bitski.com"
+        },
+        {
+          "type": "website",
+          "target": "user.bitski.com"
+        },
+        {
+          "type": "website",
+          "target": "account.bitski.com"
+        },
+        {
+          "type": "website",
+          "target": "developer.bitski.com"
+        },
+        {
+          "type": "website",
+          "target": "sign.bitski.com"
+        }
+      ],
+      "out_of_scope": []
+    }
+  }
+]

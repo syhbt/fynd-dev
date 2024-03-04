@@ -1,0 +1,36 @@
+package matcher
+
+import (
+	"strings"
+
+	"github.com/syhbt/fynd/pkg/provider"
+)
+
+func Match(input string) bool {
+	bugcrowdTargets, _ := provider.GetBugcrowdData(args.Provider)
+	hackerOneTargets, _ := provider.GetHackerOneData()
+  intigritiEndpoints, _ := provider.GetIntigritiData()
+
+	// Cocokkan dengan Bugcrowd Targets
+	for _, target := range bugcrowdTargets {
+		if strings.Contains(target, input) && len(input) >= 5 {
+			return true
+		}
+	}
+
+	// Cocokkan dengan HackerOne Targets
+	for _, target := range hackerOneTargets {
+		if strings.Contains(target, input) && len(input) >= 5 {
+			return true
+		}
+	}
+
+	// Cocokkan dengan Intigriti Endpoints
+	for _, endpoint := range intigritiEndpoints {
+		if strings.Contains(endpoint, input) && len(input) >= 5 {
+			return true
+		}
+	}
+
+	return false
+}
