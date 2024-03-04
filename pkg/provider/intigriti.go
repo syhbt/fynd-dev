@@ -12,7 +12,7 @@ type IntigritiBounty struct {
 
 type IntigritiTarget struct {
 	Type        string `json:"type"`
-	Endpoint    string `json:"endpoint,omitempty"`
+	Endpoint    string `json:"endpoint"`
 	Description string `json:"description"`
 	Impact      string `json:"impact"`
 }
