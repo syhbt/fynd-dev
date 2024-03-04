@@ -28,7 +28,7 @@ type HackenproofData struct {
 }
 
 func GetHackenproofData() ([]HackenproofData, error) {
-	file, err := os.Open("hackenproof_data.json")
+	file, err := os.Open("data/hackenproof_data.json")
 	if err != nil {
 		return nil, err
 	}

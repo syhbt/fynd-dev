@@ -52,8 +52,22 @@ func matchAndPrint(query string) bool {
 		log.Fatal(err)
 	}
 
-	if matcher.MatchURLAssetIdentifier(query, hackerOneData, bugcrowdData, intigritiData) {
-		fmt.Printf("%s", query)
+	federacyData, err := provider.GetFederacyData()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	hackenproofData, err := provider.GetHackenproofData()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	yeswehackData, err := provider.GetYesWeHackData()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if matcher.MatchDomain(query, bugcrowdData, federacyData, hackenproofData, hackerOneData, intigritiData, yeswehackData) {
 		for _, data := range hackerOneData {
 			for _, target := range data.Targets.InScope {
 				if strings.Contains(target.AssetIdentifier, query) && target.AssetType == "URL" {

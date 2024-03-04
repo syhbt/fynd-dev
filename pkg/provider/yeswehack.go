@@ -27,7 +27,7 @@ type YesWeHackData struct {
 }
 
 func GetYesWeHackData() ([]YesWeHackData, error) {
-	file, err := os.Open("yeswehack_data.json")
+	file, err := os.Open("data/yeswehack_data.json")
 	if err != nil {
 		return nil, err
 	}
