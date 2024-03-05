@@ -37,7 +37,7 @@ func MatchDomain(input string, bugcrowdData []provider.BugcrowdData, federacyDat
 	// Check data from HackerOne
 	for _, d := range hackerOneData {
 		for _, target := range d.Targets.InScope {
-			if (target.AssetType == "URL" || target.AssetType == "WILDCARD") && len(input) >= 5 && strings.Contains(target.AssetIdentifier, input) {
+			if (target.AssetType == "URL" || target.AssetType == "WILDCARD") && strings.Contains(target.AssetIdentifier, input) {
 				return true
 			}
 		}

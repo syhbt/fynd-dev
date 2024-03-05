@@ -104,8 +104,8 @@
           "max_severity": "critical"
         },
         {
-          "asset_identifier": "*.inter.co",
-          "asset_type": "WILDCARD",
+          "asset_identifier": "inter.co",
+          "asset_type": "URL",
           "availability_requirement": null,
           "confidentiality_requirement": null,
           "eligible_for_bounty": false,
