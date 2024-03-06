@@ -1,0 +1,74 @@
+{
+  "provider": "Bugcrowd",
+  "name": "American Battle Monuments Commission",
+  "url": "https://bugcrowd.com/abmc-vdp",
+  "domains": [
+    "https://abmc.gov"
+  ]
+}
+{
+  "provider": "Federacy",
+  "name": "Belvo Technologies Inc.",
+  "url": "https://www.federacy.com/belvo-technologies-inc",
+  "domains": [
+    "dashboard.belvo.com",
+    "belvo.com"
+  ]
+}
+{
+  "provider": "HackenProof",
+  "name": "AAX",
+  "url": "https://hackenproof.com/aax/aax",
+  "domains": [
+    "https://aax.com"
+  ]
+}
+{
+  "provider": "HackerOne",
+  "name": "Inter & Co. VDP",
+  "url": "https://hackerone.com/interco_vdp",
+  "domains": [
+    "*.bancointer.com.br",
+    "*.inter.co"
+  ]
+}
+{
+  "provider": "Intigriti",
+  "name": "Ada Health",
+  "url": "https://www.intigriti.com/programs/adahealth/adahealth/detail",
+  "domains": [
+    "https://api.mobile.ada.com",
+    "https://id.ada.com",
+    "*.ada.health",
+    "*.adahealth.ca",
+    "https://care-navigation-admin-bff.eu.enterprise.ada.com",
+    "https://care-navigation-admin-fe.eu.enterprise.ada.com",
+    "https://care-navigation-bff.eu.enterprise.ada.com",
+    "https://care-navigation-fe.eu.enterprise.ada.com",
+    "https://demo-prod-assessment-bff.ada-prod-eu.prod.gcp.ada.com",
+    "https://demo-prod-hcp-report-bff.ada-prod-eu.prod.gcp.ada.com",
+    "https://demo.enterprise.ada.com",
+    "https://demo.handover.enterprise.ada.com",
+    "https://demo.sso.enterprise.ada.com",
+    "*.ada.com",
+    "*.httpproxy.data.ada.com",
+    "monitoring.*.enterprise.ada.com",
+    "monitoring.*.enterprise.adahahealth.ca",
+    "monitoring.*.gcp.ada.com",
+    "monitoring.*.gcp.adahealth.ca"
+  ]
+}
+{
+  "provider": "YesWeHack",
+  "name": "3DS OUTSCALE",
+  "url": "outscale",
+  "domains": [
+    "https://cockpit-eu-west-2.outscale.com/",
+    "https://fcu.eu-west-2.outscale.com",
+    "https://lbu.eu-west-2.outscale.com",
+    "https://osu.eu-west-2.outscale.com",
+    "https://eim.eu-west-2.outscale.com",
+    "https://icu.eu-west-2.outscale.com",
+    "https://directlink.eu-west-2.outscale.com"
+  ]
+}
