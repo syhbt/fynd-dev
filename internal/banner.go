@@ -6,12 +6,16 @@ import "fmt"
 func DisplayBanner(silent bool) {
 	if !silent {
 		fmt.Println(`
-        _______
-        |  ____|
-        | |__ _   _ _ __
-        |  __| | | | '_ \
-        | |  | |_| | | | |
-        |_|   \__,_|_| |_| Bug Bounty Target Finder. v0.1
+
+	    ______                __
+	   / ____/_  ______  ____/ /
+	  / /_  / / / / __ \/ __  /
+	 / __/ / /_/ / / / / /_/ /
+	/_/    \__, /_/ /_/\__,_/
+	      /____/	Fynd v0.1
+
+   	         github.com/syhbt
+
         `)
 	}
 }

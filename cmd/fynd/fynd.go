@@ -5,72 +5,87 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"strings"
+	"time"
+
+	"github.com/syhbt/fynd/internal"
+	"github.com/syhbt/fynd/pkg/matcher"
+	"github.com/syhbt/fynd/pkg/parser"
 
 	"github.com/fatih/color"
-	"github.com/syhbt/fynd/pkg/parser" // replace with your module path
+	"github.com/gosuri/uilive"
 )
 
-func main() {
-	onlyFound := flag.Bool("of", false, "Only show found results")
-	outputFile := flag.String("o", "", "Output file for matched queries")
-	flag.BoolVar(onlyFound, "only-found", false, "Only show found results")
+var onlyFound bool
+var outputFile string
+var silent bool
+
+func init() {
+	flag.BoolVar(&onlyFound, "of", false, "Only display results if found")
+	flag.BoolVar(&onlyFound, "only-found", false, "Only display results if found")
+	flag.StringVar(&outputFile, "o", "", "Output file to save matched queries")
+	flag.BoolVar(&silent, "silent", false, "Don't display the banner")
 	flag.Parse()
+}
 
-	fyndData, err := parser.GetFyndData()
-	if err != nil {
-		fmt.Println("Error reading data:", err)
-		return
-	}
+func main() {
+	internal.DisplayBanner(silent)
+	yellow := color.New(color.FgYellow).SprintFunc()
 
-	domainToURL := make(map[string]string)
-	for _, data := range fyndData {
-		for _, domain := range data.Domains {
-			domainToURL[domain] = data.URL
+	start := time.Now()
+
+	writer := uilive.New()
+	writer.Start()
+
+	go func() {
+		if !silent {
+			for {
+				elapsed := time.Since(start)
+				timer := elapsed.Round(time.Second)
+				fmt.Fprintf(writer, "[%s] [%s] Please wait ...\n\n", yellow("Matching Up"), timer)
+				time.Sleep(time.Second)
+			}
 		}
+	}()
+	data, err := parser.GetFyndData()
+	if err != nil {
+		panic(err)
 	}
+
+	scanner := bufio.NewScanner(os.Stdin)
+	var query []string
+	for scanner.Scan() {
+		query = append(query, scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Fprintln(os.Stderr, "reading standard input:", err)
+	}
+
+	results := matcher.MatchDomains(query, data)
+
+	writer.Stop()
+
+	green := color.New(color.FgGreen).SprintFunc()
+	cyan := color.New(color.FgCyan).SprintFunc()
+	magenta := color.New(color.FgMagenta).SprintFunc()
 
 	var file *os.File
-	if *outputFile != "" {
-		file, err = os.Create(*outputFile)
+	if outputFile != "" {
+		file, err = os.Create(outputFile)
 		if err != nil {
-			fmt.Println("Error creating output file:", err)
-			return
+			panic(err)
 		}
 		defer file.Close()
 	}
 
-	scanner := bufio.NewScanner(os.Stdin)
-	green := color.New(color.FgGreen).SprintFunc()
-	cyan := color.New(color.FgCyan).SprintFunc()
-	magenta := color.New(color.FgMagenta).SprintFunc()
-	for scanner.Scan() {
-		query := scanner.Text()
-		query = strings.TrimSpace(query)
-
-		found := false
-		var url string
-		var domain string
-		for d, u := range domainToURL {
-			if strings.Contains(d, query) && len(query) >= 7 {
-				domain = d
-				url = u
-				found = true
-				break
-			}
-		}
-
-		if found {
-			fmt.Printf("%s %s %s\n", query, green(domain), cyan(url))
+	for _, result := range results {
+		if result.Found {
+			fmt.Printf("%s %s %s\n", result.Query, green(result.Domain), cyan(result.URL))
 			if file != nil {
-				_, err = file.WriteString(query + "\n")
-				if err != nil {
-					fmt.Println("Error writing to output file:", err)
-					return
-				}
+				fmt.Fprintf(file, "%s\n", result.Query)
 			}
-		} else if !*onlyFound {
-			fmt.Printf("%s %s\n", query, magenta("Not Found"))
+		} else if !onlyFound {
+			fmt.Printf("%s %s\n", result.Query, magenta("Not Found"))
 		}
 	}
 }
