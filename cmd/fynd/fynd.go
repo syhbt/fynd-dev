@@ -46,6 +46,7 @@ func main() {
 			}
 		}
 	}()
+
 	data, err := parser.GetFyndData()
 	if err != nil {
 		panic(err)
@@ -61,7 +62,8 @@ func main() {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
 	}
 
-	results := matcher.MatchDomains(query, data)
+	results := make(chan matcher.MatchResult)
+	go matcher.MatchDomains(query, data, results)
 
 	writer.Stop()
 
@@ -78,7 +80,7 @@ func main() {
 		defer file.Close()
 	}
 
-	for _, result := range results {
+	for result := range results {
 		if result.Found {
 			fmt.Printf("%s %s %s\n", result.Query, green(result.Domain), cyan(result.URL))
 			if file != nil {

@@ -18,46 +18,45 @@ type DomainData struct {
 	URL    string
 }
 
-func MatchDomains(query []string, data []parser.FyndData) []MatchResult {
-	domainMap := make(map[string]DomainData)
-	for _, d := range data {
-		for _, domain := range d.Domains {
-			domainMap[domain] = DomainData{Domain: domain, URL: d.URL}
-		}
-	}
+func MatchDomains(query []string, data []parser.FyndData, results chan MatchResult) {
+    domainMap := make(map[string]DomainData)
+    for _, d := range data {
+        for _, domain := range d.Domains {
+            domainMap[domain] = DomainData{Domain: domain, URL: d.URL}
+        }
+    }
 
-	var results []MatchResult
-	for _, q := range query {
-		if domainData, ok := domainMap[q]; ok {
-			results = append(results, MatchResult{
-				Query:  q,
-				Domain: domainData.Domain,
-				URL:    domainData.URL,
-			})
-		} else {
-			found := false
-			for domain, domainData := range domainMap {
-				if isSubdomain(q, domain) || isSubdomain(domain, q) {
-					results = append(results, MatchResult{
-						Query:  q,
-						Domain: domainData.Domain,
-						URL:    domainData.URL,
-						Found:  true,
-					})
-					found = true
-					break
-				}
-			}
-			if !found {
-				results = append(results, MatchResult{
-					Query: q,
-					Found: false,
-				})
-			}
-		}
-	}
+    for _, q := range query {
+        if domainData, ok := domainMap[q]; ok {
+            results <- MatchResult{
+                Query:  q,
+                Domain: domainData.Domain,
+                URL:    domainData.URL,
+            }
+        } else {
+            found := false
+            for domain, domainData := range domainMap {
+                if isSubdomain(q, domain) || isSubdomain(domain, q) {
+                    results <- MatchResult{
+                        Query:  q,
+                        Domain: domainData.Domain,
+                        URL:    domainData.URL,
+                        Found:  true,
+                    }
+                    found = true
+                    break
+                }
+            }
+            if !found {
+                results <- MatchResult{
+                    Query: q,
+                    Found: false,
+                }
+            }
+        }
+    }
 
-	return results
+    close(results)
 }
 
 func isSubdomain(domain1, domain2 string) bool {
